@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RoomDAO">
+
+	<select id="selectMaxBseq" resultType="int">
+		SELECT NVL2(MAX(bseq), MAX(bseq)+1, 1)
+		FROM booking
+	</select>
+
+	<!-- 방 얻어오기 -->
+	<select id="getRoomList" parameterType="String" resultType="room">
+		SELECT * FROM room WHERE person LIKE '%'||#{person}||'%'
+	</select>
+	
+	<select id="countRoomList" resultType="int">
+		SELECT COUNT(*) FROM room WHERE person LIKE '%'||#{person}||'%'
+	</select>
+	
+	<select id="pagingRoom" resultType="room">
+	SELECT * 
+	  FROM (SELECT ROWNUM rn, A.* 
+			  FROM (SELECT * 
+					  FROM room
+					 WHERE person LIKE '%'||#{person}||'%'
+				 	 ORDER BY roomNum) A)
+	  WHERE rn BETWEEN #{start} AND #{end}
+	</select>
+
+	<!-- 방 하나 얻어오기 -->
+	<select id="getRoom" resultType="room">
+		SELECT * FROM room WHERE roomNum=#{roomNum}
+	</select>
+	
+	<select id="getBookList" resultType="book">
+		SELECT * 
+  		  FROM booking
+	     WHERE roomNum = #{roomNum}
+	</select>
+	
+	<select id="getBookListAll" resultType="book">
+		SELECT * 
+  		  FROM booking
+  		  WHERE id LIKE '%'||#{search}||'%'
+  		  ORDER BY result, bseq DESC
+	</select>
+	
+	<insert id="reserveRoom" parameterType="book">
+		INSERT INTO booking (bseq, id, phone, reserveDate, roomNum, person, price, name)
+		VALUES (#{bseq}, #{id}, #{phone}, #{reserveDate}, #{roomNum}, #{person}, #{price}, #{name}) 
+	</insert>
+	
+	<select id="getBookListById" resultType="book">
+		SELECT *
+		  FROM booking
+		 WHERE id=#{id}
+	</select>
+	
+	<insert id="insertRoom">
+		INSERT INTO room
+		VALUES (#{roomNum}, #{person}, #{price}, #{image})
+	</insert>
+	
+	<update id="updateRoom">
+		UPDATE room
+		SET person=#{person}, price=#{price}, image=#{image}
+		WHERE roomNum=#{roomNum}
+	</update>
+	
+	<delete id="deleteRoom">
+		DELETE FROM room WHERE roomNum = #{roomNum}
+	</delete>
+	
+	<update id="updateBook">
+		UPDATE booking
+		SET result='2'
+		WHERE bseq=#{bseq}
+	</update>
+	
+	<delete id="deleteBook">
+		DELETE FROM booking WHERE bseq=#{bseq}
+	</delete>
+</mapper>

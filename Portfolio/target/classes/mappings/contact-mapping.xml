@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ContactDAO">
+
+	<select id="getContactList" resultType="contact">
+		SELECT *
+		FROM contact
+		ORDER BY cseq DESC
+	</select>
+	
+	<select id="getContactListById" resultType="contact">
+		SELECT *
+		FROM contact
+		WHERE id=#{id}
+		ORDER BY cseq DESC
+	</select>
+
+	<select id="getContact" resultType="contact">
+		SELECT * FROM contact WHERE
+		cseq = #{cseq}
+	</select>
+
+	<insert id="insertContact">
+		INSERT INTO contact(cseq, title, content, id)
+		VALUES
+		(#{cseq}, #{title}, #{content}, #{id})
+	</insert>
+
+	<select id="selectMaxCseq" resultType="int">
+		SELECT NVL2(MAX(cseq),
+		MAX(cseq)+1, 1)
+		FROM contact
+	</select>
+	
+	<update id="updateContact">
+		UPDATE contact
+		SET title=#{title}, content=#{content}
+		WHERE cseq=#{cseq}
+	</update>
+	
+	<delete id="deleteContact">
+		DELETE FROM contact WHERE cseq=#{cseq}
+	</delete>
+	
+	<update id="updateReply">
+		UPDATE contact SET reply=#{reply}, rep=2 WHERE cseq=#{cseq}
+	</update>
+	
+</mapper>

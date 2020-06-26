@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.port.biz.vo.AddressVO" alias="address"></typeAlias>
+		<typeAlias type="com.port.biz.vo.AdminVO" alias="admin"></typeAlias>
+		<typeAlias type="com.port.biz.vo.BookVO" alias="book"></typeAlias>
+		<typeAlias type="com.port.biz.vo.CartVO" alias="cart"></typeAlias>
+		<typeAlias type="com.port.biz.vo.ContactVO" alias="contact"></typeAlias>
+		<typeAlias type="com.port.biz.vo.MemberVO" alias="member"></typeAlias>
+		<typeAlias type="com.port.biz.vo.OrdersVO" alias="orders"></typeAlias>
+		<typeAlias type="com.port.biz.vo.ProductVO" alias="product"></typeAlias>
+		<typeAlias type="com.port.biz.vo.RoomVO" alias="room"></typeAlias>
+		<typeAlias type="com.port.biz.vo.CommentsVO" alias="comment"></typeAlias>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mappings/product-mapping.xml" /> 
+		<mapper resource="mappings/member-mapping.xml" /> 
+		<mapper resource="mappings/room-mapping.xml" /> 
+		<mapper resource="mappings/cart-mapping.xml" />
+		<mapper resource="mappings/order-mapping.xml" />
+		<mapper resource="mappings/contact-mapping.xml" />
+		<mapper resource="mappings/comment-mapping.xml" />
+		<mapper resource="mappings/admin-mapping.xml" />
+	</mappers>
+</configuration>
